@@ -1,22 +1,24 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "name": "task-widget",
+  "version": "0.0.1",
+  "description": "",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/yush1ga/task-widget",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "Electron"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "yush1ga",
+  "license": "MIT",
   "devDependencies": {
-    "electron": "^5.0.2"
+    "electron": "^5.0.2",
+    "eslint": "^5.16.0",
+    "eslint-config-google": "^0.13.0"
+  },
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "uuid": "^3.3.2"
   }
 }
