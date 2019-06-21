@@ -50,7 +50,10 @@ function fetchTodoist() {
           }
         })
       let set = new Set(items.map((d) => { return d.id }))
-      tray.setTitle(items[0].content)
+      if (items.length) {
+        tray.setTitle(items[0].content)
+      }
+      
       request({
         url: 'https://todoist.com/api/v8/activity/get?event_type=completed&token=' + token,
         method: 'GET',
