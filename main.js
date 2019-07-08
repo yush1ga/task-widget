@@ -199,4 +199,5 @@ app.on('ready', function () {
   tray = new Tray((__dirname + "/imgs/icon.png").toString())
   tray.setToolTip(app.getName())
   fetchTodoist()
+  setInterval(fetchTodoist, 5 * 60 * 1000)
 })
