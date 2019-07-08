@@ -1,4 +1,4 @@
-const { app, Menu, Tray, BrowserWindow, ipcMain } = require('electron')
+const { app, Menu, Tray, dialog, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const fs = require('fs')
 const request = require('request');
@@ -10,7 +10,7 @@ let tray
 function fetchTodoist() {
   fs.readFile(path.join(process.env["HOME"], '.todoisttoken'), 'utf-8', (err, token) => {
     if (err) {
-      createSettingWindow()
+      dialog.showErrorBox('error', 'put .todoisttoken file at $HOME')
       tray.setContextMenu(buildContextMenu([]))
       return
     }
@@ -85,7 +85,7 @@ function fetchTodoist() {
 function completeTask(task_id) {
   fs.readFile(path.join(process.env["HOME"], '.todoisttoken'), 'utf-8', (err, token) => {
     if (err) {
-      createSettingWindow()
+      dialog.showErrorBox('error', 'put .todoisttoken file at $HOME')
       return
     }
     let commands = '[{"type": "item_complete", "uuid": "' + uuidv1() + '", "args": {"id": ' + task_id + '}}]'
@@ -105,7 +105,7 @@ function completeTask(task_id) {
 function uncompleteTask(task_id) {
   fs.readFile(path.join(process.env["HOME"], '.todoisttoken'), 'utf-8', (err, token) => {
     if (err) {
-      createSettingWindow()
+      dialog.showErrorBox('error', 'put .todoisttoken file at $HOME')
       return
     }
     let commands = '[{"type": "item_unarchive", "uuid": "' + uuidv1() + '", "args": {"id": ' + task_id + '}}]'
@@ -127,15 +127,6 @@ function buildContextMenu(items) {
     {
       label: "Sync", click: function () {
         fetchTodoist()
-      }
-    },
-    {
-      label: "Setting", click: function () {
-        if (settingWindow == null) {
-          createSettingWindow()
-        } else {
-          settingWindow.focus()
-        }
       }
     },
     {
@@ -173,23 +164,6 @@ function buildContextMenu(items) {
     }
   }
   return Menu.buildFromTemplate(menuItems)
-}
-
-function createSettingWindow() {
-  settingWindow = new BrowserWindow({
-    width: 480,
-    height: 320,
-    transparent: true,
-    resizable: true,
-    webPreferences: {
-      nodeIntegration: true
-    }
-  })
-
-  settingWindow.loadFile('./views/setting.html')
-  settingWindow.on('closed', function () {
-    settingWindow = null
-  })
 }
 
 app.on('ready', function () {
