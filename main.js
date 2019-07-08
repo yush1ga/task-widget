@@ -29,7 +29,7 @@ function fetchTodoist() {
         let m = String(today.getMonth() + 1)
         if (m.length === 1) m = '0' + m
         let d = String(today.getDate())
-        if (d.length === 1) m = '0' + d
+        if (d.length === 1) d = '0' + d
         today = y + '-' + m + '-' + d
         return item.due !== null && item.due.date === today
       })
